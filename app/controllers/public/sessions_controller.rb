@@ -4,19 +4,19 @@ class Customers::SessionsController < Devise::SessionsController
   before_action :customer_state, only: [:create]
 
   # GET /resource/sign_in
-def new
+　def new
   
-end
+　end
 
   # POST /resource/sign_in
-def create
+　def create
   
-end
+　end
 
   # DELETE /resource/sign_out
-def destroy
+　def destroy
   
-end
+　end
 
   protected
 

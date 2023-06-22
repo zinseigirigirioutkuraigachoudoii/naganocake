@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Naganocake</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,6 +11,15 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'layouts/header' %>
+    <main>
+      <div class="body">
+        <div class="container">
+          <p id="notice"><%= notice %></p>
+          <%= yield %>
+        </div>
+      </div>
+    </main>
+    <%= render 'layouts/footer' %>
   </body>
 </html>
