@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row justify-content-center mt-5 mx-auto">
+    <div class="col-md-12 headline">
+      <h4>注文情報入力</h4>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-4 mx-auto ">
+    <div class="col-md-12">
+      <%= form_with model: @order, url: confirm_orders_path, data: { turbolinks: false } ,method: :post do |f| %>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>
+               <h5><strong>支払方法</strong></h5>
+               <div class="mb-4 px-3">
+                 <%= f.radio_button :payment, Order.payments.key(0) %>
+                 <%= f.label :payment_credit_card, Order.payments_i18n[:クレジットカード] %><br>
+                 <%= f.radio_button :payment, Order.payments.key(1) %>
+                 <%= f.label :payment_credit_card, Order.payments_i18n[:銀行振込] %>
+               </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5><strong>お届け先</strong></h5>
+                <div class="mb-3 px-3">
+                  <%= f.radio_button :select_address, 0 %>
+                  <%= f.label :address_number_0, "【ご自身の住所】" %>
+                  <div class="px-4">
+                    〒<%= current_customer.postcode %><%= current_customer.address %><br>
+                    <%= current_customer.last_name %><%= current_customer.first_name %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="mb-3 px-3">
+                  <%= f.radio_button :select_address, 1 %>
+                  <%= f.label :address_number_1, "【登録済み住所から選択】" %>
+                  <div class="mt-1 px-4">
+                    <%= f.select :address_id, options_from_collection_for_select(ShippingAddress.all, :id, :shipping_address_display) %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="px-3">
+                  <%= f.radio_button :select_address, 2 %>
+                  <%= f.label :address_number_2, "【新しいお届け先】"%>
+                 <div class="form-group row mb-2 mt-2 px-4">
+                   <div class="col-md-5">
+                    <%= f.label :postcode, "郵便番号(ハイフンなし)" %>
+                   </div>
+                   <div class="col-md-4">
+                     <%= f.text_field :postcode, placeholder: "0000000" ,class: "form-control" %>
+                   </div>
+                 </div>
+                 <div class="form-group row mb-2 px-4">
+                   <div class="col-md-5">
+                    <%= f.label :address, "住所" %>
+                   </div>
+                   <div class="col-md-7">
+                     <%= f.text_field :address, placeholder: "東京都渋谷区代々木〇〇町" ,class: "form-control" %>
+                   </div>
+                 </div>
+                 <div class="form-group row px-4">
+                   <div class="col-md-5">
+                    <%= f.label :name, "宛名" %>
+                   </div>
+                   <div class="col-md-4">
+                     <%= f.text_field :name, placeholder: "山田太郎",class: "form-control" %>
+                   </div>
+                 </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+       <div class="text-center mt-4">
+        <%= f.submit "確認画面へ進む", class: "btn btn-primary" %>
+       </div>
+      <% end %>
+   　 </div>
+  </div>
+</div>
