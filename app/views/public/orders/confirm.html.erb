@@ -75,9 +75,11 @@
   <div class="row mt-5">
     <div class="col text-center">
       <%= form_with model: @order, url: orders_path, method: :post  do |f| %>
+       <%= f.hidden_field :payment %>
        <%= f.hidden_field :name %>
-       <%= f.hidden_field :post_code %>
+       <%= f.hidden_field :post_code, :value => @order.post_code %>
        <%= f.hidden_field :address %>
+       <%= f.hidden_field :name %>
        <%= f.submit '注文を確定する', class: 'btn btn-success', data: { confirm: "注文確定をします よろしいですか？" }   %>
       <% end %>
     </div>

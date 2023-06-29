@@ -27,10 +27,10 @@ class Public::OrdersController < ApplicationController
       @order.name = current_customer.last_name + current_customer.first_name
     elsif params[:order][:select_address] == "1"
       
-    if Address.exists?(id: params[:order][:address_id])
-      @address = Address.find(params[:order][:address_id])
+    if ShippingAddress.exists?(id: params[:order][:shipping_address_id])
+      @address = ShippingAddress.find(params[:order][:shipping_address_id])
       @order.name = @address.name
-      @order.post_code = @address.post_code
+      @order.post_code = @address.postcode
       @order.address = @address.address
     else
       flash[:notice] = "配送先情報がありません"
@@ -38,7 +38,7 @@ class Public::OrdersController < ApplicationController
     end
     elsif params[:order][:select_address] == "2"
       @order.name = params[:order][:name]
-      @order.postcode = params[:order][:postcode]
+      @order.post_code = params[:order][:post_code]
       @order.address = params[:order][:address]
     else
       render 'new'
@@ -102,5 +102,9 @@ class Public::OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:customer_id, :postage, :total, :status, :payment, :name, :post_code, :address)
+  end
+  
+  def shipping_address_params
+    params.require(:shipping_address).permit(:postcode, :address, :name, :customer_id)
   end
 end

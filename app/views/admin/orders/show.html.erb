@@ -30,7 +30,7 @@
           </tr>
             <td>配送先</td>
             <td>
-              〒<%= @order.postcode.to_s.insert(3, "-") %>
+              〒<%= @order.post_code.to_s.insert(3, "-") %>
               <%= @order.address%></br>
               <%= @order.name%>
             </td>

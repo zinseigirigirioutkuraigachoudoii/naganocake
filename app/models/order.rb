@@ -6,7 +6,7 @@ class Order < ApplicationRecord
   has_many :items, through: :order_items
 
   #バリデーション設定
-  validates :payment, :name, :postcode, :address, presence: true
+  validates :payment, :name, :post_code, :address, presence: true
 
   #enum設定
   enum payment: { クレジットカード: 0, 銀行振込: 1 }
