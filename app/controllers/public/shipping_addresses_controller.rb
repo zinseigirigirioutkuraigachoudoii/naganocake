@@ -1,7 +1,7 @@
 class Public::ShippingAddressesController < ApplicationController
   def index
     @shipping_address = ShippingAddress.new
-    @shipping_addresses = current_customer.shipping_addresses
+    @shipping_addresses = ShippingAddress.all
   end
 
   def edit
@@ -24,7 +24,7 @@ class Public::ShippingAddressesController < ApplicationController
 
   def update
     @shipping_address = ShippingAddress.find(params[:id])
-    @shipping_address.update(address_params)
+    @shipping_address.update(shipping_address_params)
     redirect_to shipping_addresses_path
     flash[:notice] = "変更が完了しました"
   end

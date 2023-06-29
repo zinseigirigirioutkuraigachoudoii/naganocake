@@ -1,11 +1,9 @@
 <div class= 'container mt-5'>
   <div class='row'>
-
-  <div class='login-flash-message'>
-     <%= flash[:alert] %>
-  </div>
-
     <div class="col-md-8 mx-auto" >
+    <div class='login-flash-message text-center'>
+      <%= flash[:alert] %>
+    </div>
       <h4 class="mx-auto headline mt-2 mb-4">ログイン</h4>
       <p>会員の方はこちらからログイン</p>
 
@@ -26,7 +24,7 @@
           </div>
   
           <div class="actions text-center mt-4 mb-2">
-            <%= f.submit "ログイン", :class => "btn btn-lg mt-1 btn-success" %>
+            <%= f.submit "ログイン", :class => "btn btn-sm btn-primary mt-3 w-25" %>
           </div>
         <% end %>
       <div class="text-center mt-5">

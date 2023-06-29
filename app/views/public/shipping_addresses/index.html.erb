@@ -6,7 +6,7 @@
     <%= render "layouts/error_messages", model: @shipping_address %>
     <div class="form-group row mt-3 p-3" >
 
-      <%= form_with model: @shipping_address, url: addresses_path, local: true do |f| %>
+      <%= form_with model: @shipping_address, url: shipping_addresses_path, local: true do |f| %>
         <div class="form-group mt-3 row">
           <label class="col-md-6">郵便番号（ハイフンなし）</label>
           <div class="col-md-4">

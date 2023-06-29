@@ -1,9 +1,8 @@
 class Admin::CustomersController < ApplicationController
   before_action :authenticate_admin!
-  before_action :set_customer, only: [:show, :update]
 
   def index
-    @customers = Customer.latest
+    @customers = Customer.order("created_at ASC").page(params[:page])
   end
 
   def show
@@ -15,17 +14,22 @@ class Admin::CustomersController < ApplicationController
   end
 
   def update
-    @customer.update(customer_params)
-    redirect_to request.referer, notice: 'Successfully updated customer status'
+    @customer = Customer.find(params[:id])
+    if @customer.update(customer_params)
+     redirect_to admin_customer_path(@customer), notice: "顧客情報を更新しました"
+    else
+     render :edit
+    end
+  end
+  
+  def order
+     @customer = Customer.find(params[:id])
+     @orders = @customer.orders.page(params[:page])
   end
 
   private
 
-  def set_customer
-    @customer = Customer.find(params[:id])
-  end
-
   def customer_params
-    params.require(:customer).permit(:is_deleted)
+    params.require(:customer).permit(:last_name,:first_name,:last_name_kana,:first_name_kana,:postcode,:address,:phone_number,:email,:is_deleted)
   end
 end

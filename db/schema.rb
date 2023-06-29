@@ -89,12 +89,14 @@ ActiveRecord::Schema.define(version: 2023_06_21_232930) do
   end
 
   create_table "items", force: :cascade do |t|
+    t.integer "genre_id", null: false
     t.string "name", null: false
     t.text "description", null: false
     t.integer "price", null: false
     t.boolean "is_active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["genre_id"], name: "index_items_on_genre_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -137,6 +139,7 @@ ActiveRecord::Schema.define(version: 2023_06_21_232930) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_items", "customers"
   add_foreign_key "cart_items", "items"
+  add_foreign_key "items", "genres"
   add_foreign_key "order_items", "items"
   add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "customers"

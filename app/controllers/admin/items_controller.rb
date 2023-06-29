@@ -1,45 +1,47 @@
 class Admin::ItemsController < ApplicationController
-  before_action :authenticate_admin!
-  before_action :set_item, only: [:show, :edit, :update]
-
   def index
-    @items = Item.all
+    @items = Item.page(params[:page])
   end
 
   def new
     @item = Item.new
+    @genres = Genre.all
+    @genre = Genre.new
   end
-
+  
   def create
     @item = Item.new(item_params)
     if @item.save
-      redirect_to admin_item_path(@item)
+      redirect_to admin_item_path(@item.id),notice: "商品の登録が完了しました"
     else
+      @genres = Genre.all
       render :new
     end
   end
 
   def show
-  end
-
-  def edit
-  end
-
-  def update
-    if @item.update(item_params)
-      redirect_to admin_item_path(@item)
-    else
-      render :edit
-    end
-  end
-
-  private
-
-  def set_item
     @item = Item.find(params[:id])
   end
 
-  def item_params
-    params.require(:item).permit(:name, :description, :price, :is_deleted, :image)
+  def edit
+    @item = Item.find(params[:id])
+    @genres = Genre.all
   end
+  
+  def update
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
+      redirect_to admin_item_path(@item.id), notice: "商品情報が更新されました"
+    else
+      @genres = Genre.all
+      render :edit
+    end
+  end
+  
+  private
+  
+  def item_params
+    params.require(:item).permit(:image,:genre_id,:name,:description,:price,:is_active)
+  end
+  
 end

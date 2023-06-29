@@ -1,22 +1,20 @@
 class Admin::OrdersController < ApplicationController
-  before_action :authenticate_admin!
-  before_action :set_order
-
   def show
     @order = Order.find(params[:id])
+    @order_items =  @order.order_items
   end
 
   def update
-    @order.update(order_params)
-    redirect_to admin_order_path(@order), notice: 'Successfully updated order status'
+    @order = Order.find(params[:id])
+    @order_items = @order.order_items
+    if @order.update(order_params)
+      @order_items.update_all(status: "waiting_for_production") if @order.status == "confirmation_of_payment"
+    end
+    redirect_to request.referer
   end
 
   private
-
-  def set_order
-    @order = Order.find(params[:id])
-  end
-
+  
   def order_params
     params.require(:order).permit(:status)
   end

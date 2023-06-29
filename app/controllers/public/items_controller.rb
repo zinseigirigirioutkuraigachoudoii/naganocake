@@ -1,6 +1,11 @@
 class Public::ItemsController < ApplicationController
+  before_action :all_genre
+
   def index
-    @items, @sort = get_items(params)
+    @q = Item.ransack(params[:q])
+    @item = @q.result
+    @items = Item.all.page(params[:page]).per(8).order(created_at: :DESC)
+
   end
 
   def show
@@ -8,15 +13,18 @@ class Public::ItemsController < ApplicationController
     @cart_item = CartItem.new
   end
 
+  def genre_search
+    @genre = Genre.find(params[:id])
+    @items = @genre.items.order(created_at: :DESC)
+  end
+
   private
 
-  def get_items(params)
-    return Item.all, 'default' unless params[:latest] || params[:price_high_to_low] || params[:price_low_to_high]
+  def all_genre
+     @genres = Genre.all
+  end
 
-    return Item.latest, 'latest' if params[:latest]
-
-    return Item.price_high_to_low, 'price_high_to_low' if params[:price_high_to_low]
-
-    return Item.price_low_to_high, 'price_low_to_high' if params[:price_low_to_high]
+  def item_params
+    params.require(:item).permit(:genre_id, :name, :description, :price, :is_active)
   end
 end

@@ -12,11 +12,11 @@
     </div>
     <div class="mt-5">
       <h3><strong>新着商品</strong></h3>
-      <div class="row mt-4">
-
+      <div class="row justify-content-around mt-4">
+        <%= render 'public/items/index', items: @items %>
       </div>
       <p class="text-center mt-5">
-        <%= link_to 'すべての商品を見る', items_path, class: "item-index", style: "color: #3C2A21;" %>
+        <%= link_to 'すべての商品を見る', items_path, class: "item-index" %>
       </p>
     </div>
   </div>
